@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Board Game Ratings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+<body class="bg-light">
+
+    <div class="container py-5">
+
+        <!-- Page header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h1 class="mb-0">
+                <i class="bi bi-dice-6-fill text-primary me-2"></i>Board Game Ratings
+            </h1>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addGameModal">
+                <i class="bi bi-plus-lg me-1"></i>Add Game
+            </button>
+        </div>
+
+        <!-- Ratings legend -->
+        <div class="alert alert-info d-flex align-items-center mb-4" role="alert">
+            <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+            <span>Ratings are scored <strong>1–10</strong> per category. The <strong>Sum</strong> is the total of all five rating categories (max&nbsp;50).</span>
+        </div>
+
+        <!-- Game table -->
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-striped table-bordered table-hover align-middle mb-0 bg-white">
+                <thead class="table-dark">
+                    <tr>
+                        <!-- Basic info -->
+                        <th scope="col"><i class="bi bi-calendar3 me-1"></i>Date</th>
+                        <th scope="col"><i class="bi bi-controller me-1"></i>Name</th>
+                        <th scope="col"><i class="bi bi-people-fill me-1"></i>Players</th>
+                        <th scope="col"><i class="bi bi-clock-fill me-1"></i>Playtime</th>
+                        <th scope="col"><i class="bi bi-person-fill me-1"></i>Age</th>
+                        <th scope="col"><i class="bi bi-tag-fill me-1"></i>Price</th>
+                        <!-- Ratings -->
+                        <th scope="col" class="text-center"><i class="bi bi-book-fill me-1"></i>Rulebook</th>
+                        <th scope="col" class="text-center"><i class="bi bi-arrow-repeat me-1"></i>Replayability</th>
+                        <th scope="col" class="text-center"><i class="bi bi-emoji-laughing-fill me-1"></i>Fun</th>
+                        <th scope="col" class="text-center"><i class="bi bi-diagram-3-fill me-1"></i>Strategy</th>
+                        <th scope="col" class="text-center"><i class="bi bi-chat-dots-fill me-1"></i>Interaction</th>
+                        <th scope="col" class="text-center fw-bold"><i class="bi bi-trophy-fill me-1"></i>Sum</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="gameTableBody">
+                    <!-- Rows are injected by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- data.js export panel -->
+        <div id="dataExportSection" class="mt-4 d-none">
+            <div class="card border-secondary">
+                <div class="card-header d-flex align-items-center justify-content-between bg-secondary text-white">
+                    <span><i class="bi bi-file-earmark-code me-2"></i>data.js — copy &amp; paste to persist your games</span>
+                    <button id="copyDataBtn" class="btn btn-sm btn-outline-secondary text-white border-white">
+                        <i class="bi bi-clipboard me-1"></i>Copy
+                    </button>
+                </div>
+                <div class="card-body p-0">
+                    <pre id="dataExportPre" class="bg-dark text-light p-3 mb-0 rounded-bottom" style="font-size:.85rem;"></pre>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /container -->
+
+
+    <!-- Add Game Modal -->
+    <div class="modal fade" id="addGameModal" tabindex="-1" aria-labelledby="addGameModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="addGameModalLabel">
+                        <i class="bi bi-plus-circle me-2"></i>Add New Game
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="addGameForm" class="needs-validation" novalidate>
+
+                        <h6 class="text-muted mb-3"><i class="bi bi-info-circle me-1"></i>Basic Information</h6>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3">
+                                <label for="inputDate" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="inputDate" required />
+                                <div class="invalid-feedback">Please enter a date.</div>
+                            </div>
+                            <div class="col-md-9">
+                                <label for="inputName" class="form-label">Game Name</label>
+                                <input type="text" class="form-control" id="inputName" placeholder="e.g. Catan" required />
+                                <div class="invalid-feedback">Please enter a game name.</div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputPlayers" class="form-label">Players</label>
+                                <input type="text" class="form-control" id="inputPlayers" placeholder="e.g. 2–4" required />
+                                <div class="invalid-feedback">Please enter player count.</div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputPlaytime" class="form-label">Playtime</label>
+                                <input type="text" class="form-control" id="inputPlaytime" placeholder="e.g. 60–120 min" required />
+                                <div class="invalid-feedback">Please enter playtime.</div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputAge" class="form-label">Age Limit</label>
+                                <input type="text" class="form-control" id="inputAge" placeholder="e.g. 10+" required />
+                                <div class="invalid-feedback">Please enter age limit.</div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputPrice" class="form-label">Price</label>
+                                <input type="text" class="form-control" id="inputPrice" placeholder="e.g. $45" required />
+                                <div class="invalid-feedback">Please enter price.</div>
+                            </div>
+                        </div>
+
+                        <h6 class="text-muted mb-3"><i class="bi bi-star me-1"></i>Ratings (1–10)</h6>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="inputRulebook" class="form-label">
+                                    <i class="bi bi-book-fill me-1 text-secondary"></i>Rulebook Explainability
+                                </label>
+                                <input type="number" class="form-control rating-input" id="inputRulebook" min="1" max="10" placeholder="1–10" required />
+                                <div class="invalid-feedback">Please enter a rating between 1 and 10.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputReplayability" class="form-label">
+                                    <i class="bi bi-arrow-repeat me-1 text-secondary"></i>Replayability
+                                </label>
+                                <input type="number" class="form-control rating-input" id="inputReplayability" min="1" max="10" placeholder="1–10" required />
+                                <div class="invalid-feedback">Please enter a rating between 1 and 10.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputFun" class="form-label">
+                                    <i class="bi bi-emoji-laughing-fill me-1 text-secondary"></i>Fun
+                                </label>
+                                <input type="number" class="form-control rating-input" id="inputFun" min="1" max="10" placeholder="1–10" required />
+                                <div class="invalid-feedback">Please enter a rating between 1 and 10.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputStrategy" class="form-label">
+                                    <i class="bi bi-diagram-3-fill me-1 text-secondary"></i>Strategy Depth
+                                </label>
+                                <input type="number" class="form-control rating-input" id="inputStrategy" min="1" max="10" placeholder="1–10" required />
+                                <div class="invalid-feedback">Please enter a rating between 1 and 10.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputInteraction" class="form-label">
+                                    <i class="bi bi-chat-dots-fill me-1 text-secondary"></i>Player Interaction
+                                </label>
+                                <input type="number" class="form-control rating-input" id="inputInteraction" min="1" max="10" placeholder="1–10" required />
+                                <div class="invalid-feedback">Please enter a rating between 1 and 10.</div>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <div class="card w-100 text-center border-primary">
+                                    <div class="card-body py-2">
+                                        <small class="text-muted d-block"><i class="bi bi-trophy-fill me-1 text-warning"></i>Sum</small>
+                                        <strong id="modalSum" class="fs-4 text-primary">—</strong>
+                                        <small class="text-muted"> / 50</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg me-1"></i>Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary" id="saveGameBtn">
+                        <i class="bi bi-check-lg me-1"></i>Save Game
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div><!-- /modal -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+</body>
+</html>
