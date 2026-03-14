@@ -24,6 +24,24 @@ function sumBadge(sum) {
 
 // ── Render ────────────────────────────────────────────────────────────────────
 
+function ratingWithButtons(value, gameIndex, ratingField) {
+    return `<div class="d-flex align-items-center justify-content-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary" onclick="adjustRating(${gameIndex}, '${ratingField}', -1)" title="Decrease">
+            <i class="bi bi-dash-lg"></i>
+        </button>
+        ${ratingBadge(value)}
+        <button class="btn btn-sm btn-outline-secondary" onclick="adjustRating(${gameIndex}, '${ratingField}', 1)" title="Increase">
+            <i class="bi bi-plus-lg"></i>
+        </button>
+    </div>`;
+}
+
+function adjustRating(gameIndex, ratingField, delta) {
+    const newValue = Math.min(10, Math.max(1, games[gameIndex][ratingField] + delta));
+    games[gameIndex][ratingField] = newValue;
+    renderTable();
+}
+
 function renderTable() {
     const tbody = document.getElementById("gameTableBody");
     if (games.length === 0) {
@@ -41,13 +59,13 @@ function renderTable() {
                 <td><i class="bi bi-people me-1 text-muted"></i>${g.players}</td>
                 <td><i class="bi bi-clock me-1 text-muted"></i>${g.playtime}</td>
                 <td>${g.age}</td>
-                <td>${g.price}</td>
-                <td class="text-center">${ratingBadge(g.rulebook)}</td>
-                <td class="text-center">${ratingBadge(g.replayability)}</td>
-                <td class="text-center">${ratingBadge(g.fun)}</td>
-                <td class="text-center">${ratingBadge(g.strategy)}</td>
-                <td class="text-center">${ratingBadge(g.interaction)}</td>
+                <td class="text-center">${ratingWithButtons(g.rulebook, i, 'rulebook')}</td>
+                <td class="text-center">${ratingWithButtons(g.replayability, i, 'replayability')}</td>
+                <td class="text-center">${ratingWithButtons(g.fun, i, 'fun')}</td>
+                <td class="text-center">${ratingWithButtons(g.strategy, i, 'strategy')}</td>
+                <td class="text-center">${ratingWithButtons(g.interaction, i, 'interaction')}</td>
                 <td class="text-center fw-bold">${sumBadge(calcSum(g))}</td>
+                <td>${g.notes ? `<small class="text-muted">${g.notes}</small>` : '<small class="text-muted text-opacity-50">—</small>'}</td>
                 <td class="text-center">
                     <button class="btn btn-sm btn-outline-danger" onclick="deleteGame(${i})" title="Remove game">
                         <i class="bi bi-trash3"></i>
@@ -86,12 +104,12 @@ function renderDataExport() {
             `        players: "${g.players}",`,
             `        playtime: "${g.playtime}",`,
             `        age: "${g.age}",`,
-            `        price: "${g.price}",`,
             `        rulebook: ${g.rulebook},`,
             `        replayability: ${g.replayability},`,
             `        fun: ${g.fun},`,
             `        strategy: ${g.strategy},`,
-            `        interaction: ${g.interaction}`,
+            `        interaction: ${g.interaction},`,
+            `        notes: "${(g.notes || '').replace(/"/g, '\\"')}"`,
             "    }"
         ].join("\n");
     }).join(",\n");
@@ -150,12 +168,12 @@ document.getElementById("saveGameBtn").addEventListener("click", () => {
         players:       document.getElementById("inputPlayers").value.trim(),
         playtime:      document.getElementById("inputPlaytime").value.trim(),
         age:           document.getElementById("inputAge").value.trim(),
-        price:         document.getElementById("inputPrice").value.trim(),
         rulebook:      getRating("inputRulebook"),
         replayability: getRating("inputReplayability"),
         fun:           getRating("inputFun"),
         strategy:      getRating("inputStrategy"),
-        interaction:   getRating("inputInteraction")
+        interaction:   getRating("inputInteraction"),
+        notes:         document.getElementById("inputNotes").value.trim()
     });
 
     renderTable();

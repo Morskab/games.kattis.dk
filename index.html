@@ -38,7 +38,6 @@
                         <th scope="col"><i class="bi bi-people-fill me-1"></i>Players</th>
                         <th scope="col"><i class="bi bi-clock-fill me-1"></i>Playtime</th>
                         <th scope="col"><i class="bi bi-person-fill me-1"></i>Age</th>
-                        <th scope="col"><i class="bi bi-tag-fill me-1"></i>Price</th>
                         <!-- Ratings -->
                         <th scope="col" class="text-center"><i class="bi bi-book-fill me-1"></i>Rulebook</th>
                         <th scope="col" class="text-center"><i class="bi bi-arrow-repeat me-1"></i>Replayability</th>
@@ -46,6 +45,7 @@
                         <th scope="col" class="text-center"><i class="bi bi-diagram-3-fill me-1"></i>Strategy</th>
                         <th scope="col" class="text-center"><i class="bi bi-chat-dots-fill me-1"></i>Interaction</th>
                         <th scope="col" class="text-center fw-bold"><i class="bi bi-trophy-fill me-1"></i>Sum</th>
+                        <th scope="col"><i class="bi bi-chat-left-text-fill me-1"></i>Notes</th>
                         <th scope="col" class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -115,11 +115,6 @@
                                 <input type="text" class="form-control" id="inputAge" placeholder="e.g. 10+" required />
                                 <div class="invalid-feedback">Please enter age limit.</div>
                             </div>
-                            <div class="col-md-3">
-                                <label for="inputPrice" class="form-label">Price</label>
-                                <input type="text" class="form-control" id="inputPrice" placeholder="e.g. $45" required />
-                                <div class="invalid-feedback">Please enter price.</div>
-                            </div>
                         </div>
 
                         <h6 class="text-muted mb-3"><i class="bi bi-star me-1"></i>Ratings (1–10)</h6>
@@ -167,6 +162,14 @@
                                         <small class="text-muted"> / 50</small>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <h6 class="text-muted mb-3 mt-4"><i class="bi bi-pencil-square me-1"></i>Additional Notes</h6>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="inputNotes" class="form-label">Notes (optional)</label>
+                                <textarea class="form-control" id="inputNotes" rows="3" placeholder="e.g. Great game, but setup takes too long..."></textarea>
                             </div>
                         </div>
 

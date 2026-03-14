@@ -5,12 +5,12 @@ const games = [
         players: "2-6",
         playtime: "60-120 min.",
         age: "14+",
-        price: "549,95",
         rulebook: 5,
         replayability: 5,
         fun: 5,
         strategy: 5,
-        interaction: 5
+        interaction: 5,
+        notes: ""
     },
     {
         date: "2026-02-16",
@@ -18,12 +18,12 @@ const games = [
         players: "2-6",
         playtime: "30",
         age: "15+",
-        price: "259,95",
         rulebook: 5,
         replayability: 5,
         fun: 5,
         strategy: 5,
-        interaction: 5
+        interaction: 5,
+        notes: ""
     },
     {
         date: "2026-03-09",
@@ -31,11 +31,11 @@ const games = [
         players: "2-4",
         playtime: "45-60 min.",
         age: "10+",
-        price: "339,95",
         rulebook: 5,
         replayability: 5,
         fun: 5,
         strategy: 5,
-        interaction: 5
+        interaction: 5,
+        notes: ""
     }
 ];
